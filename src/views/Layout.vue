@@ -16,9 +16,17 @@
 import AppTopnav from '@/components/app-topnav'
 import AppHeader from '@/components/app-header.vue'
 import AppFooter from '@/components/app-footer.vue'
+import { useStore } from 'vuex'
 export default {
   name: 'XtxLayout',
-  components: { AppTopnav, AppHeader, AppFooter }
+  components: { AppTopnav, AppHeader, AppFooter },
+  //  获取下分类数据
+  setup() {
+    const store = useStore()
+    //  应为开启了命名空间 所以得先写模块名 再写方法名
+    // dispatch 是使用actions 里面的异步方法
+    store.dispatch('category/getList')
+  }
 }
 </script>
 
