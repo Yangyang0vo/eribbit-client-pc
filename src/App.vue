@@ -1,12 +1,4 @@
 <template>
-  <div class="container">
-    App {{ $store.state.user.profile.account }}
-    <button @click="$store.commit('user/setUser', { account: 'zzsa' })">设置用户信息</button>
-  </div>
+  <!-- 一级路由 -->
+  <Router-view></Router-view>
 </template>
-
-<script>
-export default { name: 'App' }
-</script>
-
-<style></style>

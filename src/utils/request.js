@@ -25,6 +25,7 @@ instance.interceptors.request.use(config => {
     // 设置token
     config.headers.Authorization = `Bearer ${profile.token}`
   }
+  return config
 }, err => { return Promise.reject(err) })
 
 // res => res.data  取出data数据 ，将来直接调用的时候直接拿到的就是后台的数据
@@ -50,7 +51,7 @@ export default (url, method, submitData) => {
   return instance({
     url,
     method,
-    // 1.如果是get 请求，需要把提交的数据放到params里面  ?a=10&c=10
+    // 1.如果是get 请求，需要把提交的数据放到params里面    ?a=10&c=10
     // 2.如果是post请求，需要把提交的数据放到data里面 请求体传参
     // [] 设置一个动态的key, 写js表达式，js表达式的执行结果当作KEY
     // method参数：get,Get,GET  转换成小写再来判断
