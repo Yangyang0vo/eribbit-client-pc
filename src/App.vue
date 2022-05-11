@@ -1,30 +1,37 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="container">
+    <!-- 1.使用 模块A state的数据 -->
+    <p>{{ $store.state.moduleA.username }}</p>
+    <!-- 1.1使用 模块A 的getters数据 -->
+    <p>{{ $store.getters.updateName }}</p>
+    <!-- 2.使用 模块B state的数据 -->
+    <p>{{ $store.state.moduleB.username }}</p>
+    <p>{{ $store.getters['moduleB/updateName'] }}</p>
+    <button @click="mutataionsFn">mutations btn</button>
+    <button @click="actionsFn">actions btn</button>
+  </div>
 </template>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { useStore } from 'vuex'
+export default {
+  setup() {
+    const store = useStore()
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+    const mutataionsFn = () => {
+      // 调用mutations方法
+      store.commit('moduleB/updateName')
+    }
+    const actionsFn = () => {
+      // 调用actions
+      store.dispatch('moduleB/updateName')
+    }
+    return {
+      mutataionsFn,
+      actionsFn
     }
   }
 }
-</style>
+</script>
+
+<style></style>
