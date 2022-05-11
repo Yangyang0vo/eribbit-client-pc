@@ -1,70 +1,25 @@
 import { createStore } from 'vuex'
+import createPersistedstate from 'vuex-persistedstate'
 
-// A 模块
-const moduleA = {
-  state: {
-    username: 'moduleA'
-  },
-  getters: {
-    updateName(state) {
-      return state.username + ' getter'
-    }
-  }
-}
-// B 模块
-const moduleB = {
-  namespaced: true,
-  state: {
-    username: 'moduleB'
-  },
-  getters: {
-    updateName(state) {
-      return state.username + ' getter'
-    }
-  },
-  mutations: {
-    updateName(state) {
-      state.username = 'ls'
-    }
-  },
-  actions: {
-    updateName(context) {
-      setTimeout(() => {
-        context.commit('updateName')
-      }, 1000)
-    }
-  }
-}
+// 三个模块
+import cart from './modules/cart'
+import user from './modules/user'
+import category from './modules/category'
+
 export default createStore({
   modules: {
-    moduleA,
-    moduleB
-  }
+    cart,
+    user,
+    category
+  },
+  // 配置插件
+  plugins: [
+    // 默认存储在localStorage中
+    createPersistedstate({
+      // 本地存储名字
+      key: 'erabbit-client-pc',
+      // 指定需要存储的模块
+      paths: ['user', 'cart']
+    })
+  ]
 })
-
-// vue2.0 创建仓库 new Vuex.Store({})
-// vue3.0  创建仓库createStore
-// export default createStore({
-//   state: {
-//     username: 'zs'
-//   },
-//   getters: {
-//     newName(state) {
-//       return state.username + '新名字'
-//     }
-//   },
-//   mutations: {
-//     updateName(state) {
-//       state.username = 'ls'
-//     }
-//   },
-//   actions: {
-//     updateName(context) {
-//       setTimeout(() => {
-//         context.commit('updateName')
-//       }, 1000)
-//     }
-//   },
-//   modules: {
-//   }
-// })
