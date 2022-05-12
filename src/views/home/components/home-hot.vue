@@ -18,20 +18,22 @@
 </template>
 
 <script>
-import { ref } from 'vue'
 import HomePanel from './home-panel'
+import HomeSkeleton from './home-skeleton.vue'
 import { findHot } from '@/api/home'
 import { useLazuData } from '@/hooks'
 export default {
   name: 'HomeNew',
-  components: { HomePanel },
+  components: { HomePanel, HomeSkeleton },
   setup() {
     // const goods = ref([])
     // findHot().then((data) => {
     //   goods.value = data.result
     // })
-    const target = ref(null)
-    const result = useLazuData(target, findHot)
+    // 使用懒加载
+    // 1. target 去绑定一个Dom 对象
+    // 2. 传入API函数 内部获取调用 返回数据
+    const { target, result } = useLazuData(findHot)
     return { goods: result, target }
   }
 }

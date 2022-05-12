@@ -21,21 +21,21 @@
   </div>
 </template>
 <script>
-import { ref } from 'vue'
 import HomePanel from './home-panel'
+import HomeSkeleton from './home-skeleton.vue'
 import { findNew } from '@/api/home'
 import { useLazuData } from '@/hooks'
 export default {
   name: 'HomeNew',
-  components: { HomePanel },
+  components: { HomePanel, HomeSkeleton },
   setup() {
     // 拿数据
     // const goods = ref([])
     // findNew().then((data) => {
     //   goods.value = data.result
     // })
-    const target = ref(null)
-    const result = useLazuData(target, findNew)
+    // 使用懒加载
+    const { result, target } = useLazuData(findNew)
     return { goods: result, target }
   }
 }

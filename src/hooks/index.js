@@ -6,7 +6,8 @@ import { ref } from 'vue'
  * @param {Object} target 监听的DOM元素
  * @param {Function} apiFn api函数
  */
-export const useLazuData = (target, apiFn) => {
+export const useLazuData = (apiFn) => {
+  const target = ref(null)
   const result = ref([])
   // stop 停止观察
   const { stop } = useIntersectionObserver(
@@ -20,7 +21,9 @@ export const useLazuData = (target, apiFn) => {
           result.value = data.result
         })
       }
-    }
+    },
+    // 配置选项 香蕉的比例大于0就会触发
+    { threshold: 0 }
   )
-  return result
+  return { result, target }
 }
