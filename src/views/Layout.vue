@@ -3,6 +3,8 @@
   <AppTopnav />
   <!-- 头部组件 -->
   <AppHeader />
+  <!-- 吸顶头部 -->
+  <AppHeaderSticky></AppHeaderSticky>
   <!-- 内容容器 -->
   <div class="app-body">
     <!-- 二级路由 -->
@@ -16,10 +18,11 @@
 import AppTopnav from '@/components/app-topnav'
 import AppHeader from '@/components/app-header.vue'
 import AppFooter from '@/components/app-footer.vue'
+import AppHeaderSticky from '@/components/app-header-sticky.vue'
 import { useStore } from 'vuex'
 export default {
   name: 'XtxLayout',
-  components: { AppTopnav, AppHeader, AppFooter },
+  components: { AppTopnav, AppHeader, AppFooter, AppHeaderSticky },
   //  获取下分类数据
   setup() {
     const store = useStore()
