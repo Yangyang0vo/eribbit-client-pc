@@ -33,8 +33,4 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
-.app-body {
-  height: 600px;
-}
-</style>
+<style lang="less" scoped></style>
