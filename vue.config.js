@@ -5,7 +5,7 @@ module.exports = defineConfig({
     port: 8080
   },
   transpileDependencies: true,
-  publicPath: '',
+  publicPath: '/',
   pluginOptions: {
     'style-resources-loader': {
       preProcessor: 'less',

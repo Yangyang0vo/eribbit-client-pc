@@ -24,7 +24,7 @@ import defaultImg from '@/assets/images/200.png'
 
 // context(目录路径，是否加载子目录，加载文件的匹配正则)
 const importFn = require.context('./', false, /\.vue$/)
-console.log(importFn.keys())
+// console.log(importFn.keys())
 
 export default {
   install(app) {
