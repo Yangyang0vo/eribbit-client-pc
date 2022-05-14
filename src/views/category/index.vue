@@ -9,7 +9,7 @@
         </Transition>
       </XtxBread>
       <!-- 轮播图 -->
-      <XtxCarousel :sliders="sliders" style="height: 500px" autoPlay />
+      <XtxCarousel :sliders="sliders" style="height: 500px" />
       <!-- 所有二级分类 -->
       <div class="sub-list">
         <h3>全部分类</h3>
@@ -22,55 +22,52 @@
           </li>
         </ul>
       </div>
-      <!-- 不同分类商品 -->
-      <!-- 分类关联商品 -->
+      <!-- 各个分类推荐商品 -->
       <div class="ref-goods" v-for="sub in subList" :key="sub.id">
         <div class="head">
           <h3>- {{ sub.name }} -</h3>
           <p class="tag">温暖柔软，品质之选</p>
-          <XtxMore :to="`/category/sub/${sub.id}`" />
+          <XtxMore :path="`/category/sub/${sub.id}`" />
         </div>
         <div class="body">
-          <GoodsItem v-for="g in sub.goods" :key="g.id" :goods="g" />
+          <GoodsItem v-for="goods in sub.goods" :key="goods.id" :goods="goods" />
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { computed, ref, watch } from 'vue'
 import { findBanner } from '@/api/home'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-import { computed, ref, watch } from 'vue'
 import GoodsItem from './components/goods-item'
 import { findTopCategory } from '@/api/category'
 export default {
   name: 'TopCategory',
-  components: {
-    GoodsItem
-  },
+  components: { GoodsItem },
   setup() {
-    // 轮播图 数据
+    // 轮播图
     const sliders = ref([])
     findBanner().then((data) => {
       sliders.value = data.result
     })
-    // 面包屑 + 所有分类
+
+    // 面包屑+所有子分类 ====> vuex
     const store = useStore()
     const route = useRoute()
     const topCategory = computed(() => {
-      // 当前顶级分类 === 根据理由上的ID去vuex中的category的模块的list中查找
-      // 准备一个空对象
       let cate = {}
+      // 当前顶级分类 === 根据路由上的ID去vuex中category模块的list中查找
       const item = store.state.category.list.find((item) => {
         return item.id === route.params.id
       })
-      // 如果item 没有数据也会返回一个空对象 不会报错
+      // 找到数据赋值
       if (item) cate = item
       return cate
     })
 
-    // 获取各个类目下的 推荐商品
+    // 获取各个子类目下推荐商品
     const subList = ref([])
     const getSubList = () => {
       findTopCategory(route.params.id).then((data) => {
@@ -80,14 +77,17 @@ export default {
     watch(
       () => route.params.id,
       (newVal) => {
-        // newval && getSubList() 加上一个严谨判断 在顶级类目下才能发请求
-        if (newVal && `/category${newVal}` === route.path) getSubList()
+        // newVal && getSubList() 加上一个严谨判断，在顶级类名下才发请求
+        if (newVal && `/category/${newVal}` === route.path) getSubList()
       },
-      {
-        immediate: true
-      }
+      { immediate: true }
     )
-    return { sliders, topCategory, subList }
+
+    return {
+      sliders,
+      topCategory,
+      subList
+    }
   }
 }
 </script>
@@ -107,6 +107,7 @@ export default {
       display: flex;
       padding: 0 32px;
       flex-wrap: wrap;
+      min-height: 160px;
       li {
         width: 168px;
         height: 160px;
@@ -128,6 +129,7 @@ export default {
       }
     }
   }
+  // 推荐商品
   .ref-goods {
     background-color: #fff;
     margin-top: 20px;
