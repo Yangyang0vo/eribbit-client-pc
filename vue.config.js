@@ -16,4 +16,12 @@ module.exports = defineConfig({
       ]
     }
   }
+  // 修改webpack 将10kb以内的图片打包成base64格式图片
+  // chainWebpack: config => {
+  //   config.module
+  //     .rule('images')
+  //     .use('url-loader')
+  //     .loader('url-loader')
+  //     .tap(options => Object.assign(options, { limit: 10240 }))
+  // }
 })
