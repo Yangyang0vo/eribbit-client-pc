@@ -15,7 +15,7 @@
             <GoodsItem :goods="goods" />
           </li>
         </ul>
-        <!-- 加载 -->
+        <!-- 无限加载 -->
         <XtxInfiniteLoading :loading="loading" :finished="finished" @infinite="getData" />
       </div>
     </div>
@@ -139,4 +139,5 @@ export default {
     }
   }
 }
+
 </style>

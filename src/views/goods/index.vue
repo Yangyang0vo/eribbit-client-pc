@@ -44,6 +44,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -65,7 +66,6 @@ export default {
   setup() {
     // 1. 获取商品详情，进行渲染
     const goods = useGoods()
-    //
 
     const changeSku = (sku) => {
       // 修改商品现价原价库存
@@ -80,9 +80,11 @@ export default {
     provide('goods', goods)
     // 选择的数量
     const num = ref(1)
+
     return { goods, changeSku, num }
   }
 }
+
 // 获取商品详情
 const useGoods = () => {
   // 出现路由地址商品ID发生变化 ，但是不会重新初始化操作
@@ -100,6 +102,7 @@ const useGoods = () => {
           nextTick(() => {
             // 修改完数据后dom还没生效 然后又想操作dom 这时候需要使用到nexttick
             goods.value = data.result
+            //
           })
         })
       }
