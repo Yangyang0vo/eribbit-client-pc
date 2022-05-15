@@ -42,7 +42,7 @@ export default {
     const provinceCode = ref('110000')
     const cityCode = ref('119900')
     const countyCode = ref('110101')
-    const fullLocation = ref('北京市 市辖区 东城区')
+    const fullLocation = ref('湖北省 武汉市 江夏区')
     // 取出用户收货地址中默认的地址给四个数据赋值（登录的时候）
     if (props.goods.userAddresses) {
       const defaultAddress = props.goods.userAddresses.find((item) => item.isDefault === 1)
